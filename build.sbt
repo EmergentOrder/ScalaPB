@@ -2,9 +2,10 @@ import ReleaseTransformations._
 import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject}
 
 val Scala211 = "2.11.12"
-scalaVersion in ThisBuild := Scala211
+val Scala212 = "2.12.6"
+scalaVersion in ThisBuild := Scala212
 
-crossScalaVersions in ThisBuild := Seq("2.10.6", Scala211, "2.12.4")
+crossScalaVersions in ThisBuild := Seq("2.10.6", Scala211, Scala212)
 
 scalacOptions in ThisBuild ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -29,21 +30,21 @@ releaseCrossBuild := true
 
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
-releaseProcess := Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  releaseStepCommandAndRemaining(s";++${Scala211};runtimeNative/publishSigned"),
-  ReleaseStep(action = Command.process("publishSigned", _), enableCrossBuild = true),
-  setNextVersion,
-  commitNextVersion,
-  pushChanges,
-  ReleaseStep(action = Command.process("sonatypeReleaseAll", _), enableCrossBuild = true)
-)
+//releaseProcess := Seq[ReleaseStep](
+//  checkSnapshotDependencies,
+//  inquireVersions,
+//  runClean,
+//  runTest,
+//  setReleaseVersion,
+//  commitReleaseVersion,
+//  tagRelease,
+//  releaseStepCommandAndRemaining(s";++${Scala211};runtimeNative/publishSigned"),
+//  ReleaseStep(action = Command.process("publishSigned", _), enableCrossBuild = true),
+//  setNextVersion,
+//  commitNextVersion,
+//  pushChanges,
+//  ReleaseStep(action = Command.process("sonatypeReleaseAll", _), enableCrossBuild = true)
+//)
 
 lazy val root =
   project.in(file("."))
